@@ -174,7 +174,10 @@ export default function Home() {
   return (
     <div className="container">
       <div className="main-panel">
-        <h1 className="title">Z-Index</h1>
+        <div className="header">
+          <h1 className="title">Z-Index</h1>
+          <p className="subtitle">A Book Engine by ZakCorp</p>
+        </div>
         
         <div className="search-container">
           <div className="search-input-container">
@@ -199,18 +202,19 @@ export default function Home() {
               </div>
             )}
           </div>
-          <button 
-            className={`search-button ${!isFocused && query.trim() ? 'emphasized' : ''}`}
-            onClick={handleSearch}
-            disabled={loading || !query.trim()}
-          >
-{loading ? '→' : '→'}
-          </button>
+            <button 
+              className={`search-button ${query.trim() ? 'emphasized' : ''}`}
+              onClick={handleSearch}
+              disabled={loading || !query.trim()}
+            >
+              →
+            </button>
         </div>
 
         {loading && (
-          <div className="loading">
-            trawling through Zak's mind...
+          <div className="loading-indicator">
+            <div className="throbber"></div>
+            <span className="loading-text">trawling through Zak's mind...</span>
           </div>
         )}
 
@@ -221,18 +225,22 @@ export default function Home() {
             
             return (
               <div key={index} className="book-card">
-                <h3 className="book-title">
-                  {typingState.title}
-                  {!isComplete && typingState.title.length < book.title.length && <span className="typing-cursor"></span>}
-                </h3>
-                <p className="book-author">
-                  {typingState.author}
-                  {!isComplete && typingState.author.length < book.author.length && typingState.title === book.title && <span className="typing-cursor"></span>}
-                </p>
-                <p className="book-description">
-                  {typingState.description}
-                  {!isComplete && typingState.description.length < book.description.length && typingState.title === book.title && typingState.author === book.author && <span className="typing-cursor"></span>}
-                </p>
+                <div className="book-meta">
+                  <h3 className="book-title">
+                    {typingState.title}
+                    {!isComplete && typingState.title.length < book.title.length && <span className="typing-cursor"></span>}
+                  </h3>
+                  <p className="book-author">
+                    {typingState.author}
+                    {!isComplete && typingState.author.length < book.author.length && typingState.title === book.title && <span className="typing-cursor"></span>}
+                  </p>
+                </div>
+                <div className="book-content">
+                  <p className="book-description">
+                    {typingState.description}
+                    {!isComplete && typingState.description.length < book.description.length && typingState.title === book.title && typingState.author === book.author && <span className="typing-cursor"></span>}
+                  </p>
+                </div>
               </div>
             )
           })}

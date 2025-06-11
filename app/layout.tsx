@@ -1,8 +1,8 @@
 import './globals.css'
 
 export const metadata = {
-  title: 'Z-Index: A BigBook Corp Search Engine',
-  description: 'Internal book recommendation database - BigBook Corp',
+  title: 'Z-Index: A Book Engine by ZakCorp',
+  description: 'Book recommendation engine - ZakCorp',
 }
 
 export default function RootLayout({

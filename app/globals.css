@@ -55,33 +55,64 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 4rem 1rem 2rem 1rem;
+  padding: 3rem 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .main-panel {
   width: 100%;
-  max-width: 600px;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  min-height: 60vh;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1.5rem;
 }
 
 .title {
   font-family: 'Söhne', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, system-ui, sans-serif;
-  font-size: 1.5rem;
-  font-weight: 300;
-  margin-bottom: 3rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 0;
   color: var(--text-primary);
-  text-align: center;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.subtitle {
+  font-family: 'Söhne', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, system-ui, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 400;
+  margin: 0;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
 }
 
 .search-container {
   width: 100%;
-  margin-bottom: 4rem;
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 1rem;
 }
 
 .search-input-container {
   position: relative;
   width: 100%;
-  margin-bottom: 1rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid var(--border);
 }
 
 .search-input {
@@ -91,14 +122,8 @@ body {
   font-family: 'Söhne', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, system-ui, sans-serif;
   background: transparent;
   border: none;
-  border-bottom: 1px solid var(--border);
   outline: none;
   color: var(--text-primary);
-  transition: border-color 0.2s ease;
-}
-
-.search-input:focus {
-  border-bottom-color: var(--border-focus);
 }
 
 
@@ -143,18 +168,19 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: auto;
-  padding: 0.5rem 0.75rem;
+  padding: 0.5rem 1.5rem;
   font-size: 0.9rem;
   font-family: 'JetBrains Mono', monospace;
   font-weight: 400;
   background: transparent;
   border: 1px solid var(--border);
-  border-radius: 2px;
+  border-radius: 0;
   color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.2s ease;
-  min-width: 2.5rem;
+  transition: all 0.15s ease;
+  width: auto;
+  min-width: auto;
+  justify-self: end;
 }
 
 .search-button:hover {
@@ -187,13 +213,21 @@ body {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
+  margin-top: 2rem;
 }
 
 .book-card {
-  padding: 1rem 0;
+  padding: 0;
   opacity: 0;
   animation: fadeIn 0.4s ease-out forwards;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 0;
+  align-items: baseline;
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
 }
 
 .book-card:nth-child(1) { animation-delay: 0.1s; }
@@ -208,9 +242,13 @@ body {
   to { opacity: 1; }
 }
 
+.book-meta {
+  padding-right: 2rem;
+}
+
 .book-title {
   font-family: 'Söhne', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, system-ui, sans-serif;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
   margin-bottom: 0.25rem;
   color: var(--text-primary);
@@ -220,17 +258,24 @@ body {
 
 .book-author {
   font-family: 'Söhne', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, system-ui, sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   color: var(--text-secondary);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0;
   font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.book-content {
+  padding-left: 0;
 }
 
 .book-description {
   font-family: 'Söhne', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, system-ui, sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   line-height: 1.5;
   color: var(--text-secondary);
+  margin: 0;
 }
 
 .typing-cursor {
@@ -246,12 +291,34 @@ body {
   51%, 100% { opacity: 0; }
 }
 
-.loading {
-  text-align: center;
-  color: var(--text-secondary);
+.loading-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   margin: 2rem 0;
+  padding: 1rem 0;
+}
+
+.throbber {
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--text-tertiary);
+  border-top: 1px solid var(--text-secondary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.loading-text {
+  color: var(--text-tertiary);
   font-family: 'Söhne', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, system-ui, sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 @media (max-width: 768px) {
@@ -266,5 +333,40 @@ body {
   
   .search-input {
     font-size: 0.9rem;
+  }
+  
+  .book-card {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .book-meta {
+    padding-right: 0;
+    margin-bottom: 1rem;
+  }
+  
+  .results-container {
+    gap: 1.25rem;
+  }
+  
+  .header {
+    text-align: center;
+    padding-bottom: 1rem;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+  }
+  
+  .search-input-container {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .search-button {
+    justify-self: end;
+    width: auto;
+    min-width: auto;
+    padding: 0.5rem 1rem;
   }
 }
