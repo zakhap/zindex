@@ -3,8 +3,41 @@
 import { useState, useEffect, useRef } from 'react'
 import { BookRecommendation } from './api/recommend/route'
 
+const BOOK_SUGGESTIONS = [
+  "weird fiction that makes you question reality",
+  "experimental novels that break conventional narrative",
+  "underground literature from the counterculture movement",
+  "surreal poetry that bends language",
+  "avant-garde works that challenge perception",
+  "cult classics that influenced generations",
+  "radical texts that subvert expectations",
+  "psychedelic literature that expands consciousness",
+  "dystopian visions that feel too real",
+  "obscure masterpieces hidden from mainstream",
+  "feminist literature that rewrites the rules",
+  "postmodern fiction that plays with form",
+  "beat generation writers who broke boundaries",
+  "magical realism from Latin America",
+  "existentialist philosophy disguised as fiction",
+  "cyberpunk that predicted our digital future",
+  "horror that explores psychological depths",
+  "stream-of-consciousness modernist works",
+  "queer literature that challenges norms",
+  "afrofuturism that reimagines tomorrow",
+  "autofiction that blurs reality and imagination",
+  "transgressive novels that shock and illuminate",
+  "minimalist prose with maximum impact",
+  "epic fantasy that subverts genre conventions"
+]
+
+const getRandomSuggestions = () => {
+  const shuffled = [...BOOK_SUGGESTIONS].sort(() => 0.5 - Math.random())
+  return shuffled.slice(0, 3)
+}
+
 export default function Home() {
   const [query, setQuery] = useState('')
+  const [displayQuery, setDisplayQuery] = useState('')
   const [books, setBooks] = useState<BookRecommendation[]>([])
   const [loading, setLoading] = useState(false)
   const [typingStates, setTypingStates] = useState<{ [key: number]: { title: string, author: string, description: string } }>({})
@@ -12,9 +45,12 @@ export default function Home() {
   const [showCursor, setShowCursor] = useState(true)
   const [isTyping, setIsTyping] = useState(true)
   const [isFocused, setIsFocused] = useState(false)
+  const [suggestions, setSuggestions] = useState<string[]>([])
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
+    setSuggestions(getRandomSuggestions())
+    
     const fullText = "> so you're looking for something to read..."
     let currentIndex = 0
     
@@ -171,6 +207,11 @@ export default function Home() {
     }
   }
 
+  const handleSuggestionClick = (suggestion: string) => {
+    setQuery(suggestion)
+    inputRef.current?.focus()
+  }
+
   return (
     <div className="container">
       <div className="main-panel">
@@ -187,7 +228,10 @@ export default function Home() {
               className="search-input"
               placeholder=""
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={(e) => {
+                setQuery(e.target.value)
+                setDisplayQuery(e.target.value)
+              }}
               onKeyPress={handleKeyPress}
               onFocus={handleFocus}
               onBlur={handleBlur}
@@ -202,20 +246,54 @@ export default function Home() {
               </div>
             )}
           </div>
-            <button 
-              className={`search-button ${query.trim() ? 'emphasized' : ''}`}
-              onClick={handleSearch}
-              disabled={loading || !query.trim()}
-            >
-              →
-            </button>
+          <button 
+            className={`search-button ${query.trim() ? 'emphasized' : ''}`}
+            onClick={handleSearch}
+            disabled={loading || !query.trim()}
+          >
+            →
+          </button>
         </div>
 
-        {loading && (
-          <div className="loading-indicator">
-            <div className="throbber"></div>
-            <span className="loading-text">trawling through Zak's mind...</span>
+        {suggestions.length > 0 && !loading && books.length === 0 && (
+          <div className="suggestions-container">
+            <div className="suggestions-header">or try:</div>
+            <div className="suggestions-list">
+              {suggestions.map((suggestion, index) => (
+                <button 
+                  key={index}
+                  className="suggestion-button"
+                  onClick={() => handleSuggestionClick(suggestion)}
+                >
+                  {suggestion}
+                </button>
+              ))}
+            </div>
           </div>
+        )}
+
+        {loading && (
+          <>
+            <div className="loading-indicator">
+              <span className="loading-text">consulting the archives</span>
+              <span className="loading-ellipsis">...</span>
+            </div>
+            <div className="results-container">
+              {[...Array(3)].map((_, index) => (
+                <div key={index} className="book-card placeholder-card">
+                  <div className="book-meta">
+                    <div className={`placeholder-title shimmer ${index === 0 ? 'long' : index === 1 ? 'medium' : 'short'}`}></div>
+                    <div className={`placeholder-author shimmer ${index === 0 ? 'short' : index === 1 ? 'long' : 'medium'}`}></div>
+                  </div>
+                  <div className="book-content">
+                    <div className="placeholder-description shimmer"></div>
+                    <div className="placeholder-description shimmer medium"></div>
+                    <div className={`placeholder-description shimmer ${index === 2 ? 'short' : 'long'}`}></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
         )}
 
         <div className="results-container">
