@@ -30,14 +30,36 @@ const BOOK_SUGGESTIONS = [
   "epic fantasy that subverts genre conventions"
 ]
 
+const CONSULTING_SYNONYMS = [
+  "consulting",
+  "searching",
+  "pacing",
+  "wandering",
+  "browsing",
+  "exploring",
+  "scouring",
+  "perusing",
+  "rifling through",
+  "delving into",
+  "excavating",
+  "combing through",
+  "rummaging in",
+  "investigating"
+]
+
 const getRandomSuggestions = () => {
   const shuffled = [...BOOK_SUGGESTIONS].sort(() => 0.5 - Math.random())
   return shuffled.slice(0, 3)
 }
 
+const getRandomConsultingWord = () => {
+  return CONSULTING_SYNONYMS[Math.floor(Math.random() * CONSULTING_SYNONYMS.length)]
+}
+
 export default function Home() {
   const [query, setQuery] = useState('')
   const [displayQuery, setDisplayQuery] = useState('')
+  const [consultingWord, setConsultingWord] = useState('consulting')
   const [books, setBooks] = useState<BookRecommendation[]>([])
   const [loading, setLoading] = useState(false)
   const [typingStates, setTypingStates] = useState<{ [key: number]: { title: string, author: string, description: string } }>({})
@@ -169,6 +191,7 @@ export default function Home() {
     setLoading(true)
     setBooks([])
     setTypingStates({})
+    setConsultingWord(getRandomConsultingWord())
 
     try {
       const response = await fetch('/api/recommend', {
@@ -273,27 +296,10 @@ export default function Home() {
         )}
 
         {loading && (
-          <>
-            <div className="loading-indicator">
-              <span className="loading-text">consulting the archives</span>
-              <span className="loading-ellipsis">...</span>
-            </div>
-            <div className="results-container">
-              {[...Array(3)].map((_, index) => (
-                <div key={index} className="book-card placeholder-card">
-                  <div className="book-meta">
-                    <div className={`placeholder-title shimmer ${index === 0 ? 'long' : index === 1 ? 'medium' : 'short'}`}></div>
-                    <div className={`placeholder-author shimmer ${index === 0 ? 'short' : index === 1 ? 'long' : 'medium'}`}></div>
-                  </div>
-                  <div className="book-content">
-                    <div className="placeholder-description shimmer"></div>
-                    <div className="placeholder-description shimmer medium"></div>
-                    <div className={`placeholder-description shimmer ${index === 2 ? 'short' : 'long'}`}></div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </>
+          <div className="loading-indicator-enhanced">
+            <span className="loading-text-enhanced">{consultingWord} the archives</span>
+            <span className="loading-ellipsis-enhanced">...</span>
+          </div>
         )}
 
         <div className="results-container">
@@ -304,10 +310,23 @@ export default function Home() {
             return (
               <div key={index} className="book-card">
                 <div className="book-meta">
-                  <h3 className="book-title">
-                    {typingState.title}
-                    {!isComplete && typingState.title.length < book.title.length && <span className="typing-cursor"></span>}
-                  </h3>
+                  <div className="book-title-container">
+                    <h3 className="book-title">
+                      {typingState.title}
+                      {!isComplete && typingState.title.length < book.title.length && <span className="typing-cursor"></span>}
+                    </h3>
+                    {book.url && (
+                      <a 
+                        href={book.url} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="book-link-arrow"
+                        title="Search for this book"
+                      >
+                        →
+                      </a>
+                    )}
+                  </div>
                   <p className="book-author">
                     {typingState.author}
                     {!isComplete && typingState.author.length < book.author.length && typingState.title === book.title && <span className="typing-cursor"></span>}

@@ -4,6 +4,7 @@ export interface BookRecommendation {
   title: string
   author: string
   description: string
+  url?: string
 }
 
 export async function POST(request: NextRequest) {
@@ -51,13 +52,15 @@ Each book object must have exactly these fields:
 - title: string (book title)
 - author: string (author name)  
 - description: string (compelling 2-3 sentence description that shows you deeply understand both the book and why it connects to their specific request, written in a voice that respects their intelligence and cultural sophistication)
+- url: string (a search URL in the format: https://letmegooglethat.com/?q="Book+Title"+author+name)
 
 Example format:
 [
   {
     "title": "The Midnight Library", 
     "author": "Matt Haig",
-    "description": "A philosophical exploration of life's infinite possibilities through the story of a woman who finds herself in a magical library between life and death. Perfect for readers seeking both emotional depth and thought-provoking themes about regret and second chances."
+    "description": "A philosophical exploration of life's infinite possibilities through the story of a woman who finds herself in a magical library between life and death. Perfect for readers seeking both emotional depth and thought-provoking themes about regret and second chances.",
+    "url": "https://letmegooglethat.com/?q=\"The+Midnight+Library\"+Matt+Haig"
   }
 ]`
           },
@@ -93,6 +96,11 @@ Example format:
       books.forEach((book, index) => {
         if (!book.title || !book.author || !book.description) {
           throw new Error(`Book ${index} missing required fields`)
+        }
+        // Generate URL if not provided
+        if (!book.url) {
+          const query = encodeURIComponent(`"${book.title}" ${book.author}`)
+          book.url = `https://letmegooglethat.com/?q=${query}`
         }
       })
       
