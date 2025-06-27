@@ -1,6 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap');
-
 /* Söhne font-face declarations */
+@font-face {
+  font-family: 'Söhne';
+  src: url('/fonts/TestSohne-Extraleicht.otf') format('opentype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
 @font-face {
   font-family: 'Söhne';
   src: url('/fonts/TestSohne-Leicht.otf') format('opentype');
@@ -19,8 +25,32 @@
 
 @font-face {
   font-family: 'Söhne';
+  src: url('/fonts/TestSohne-Halbfett.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Söhne';
   src: url('/fonts/TestSohne-Kraftig.otf') format('opentype');
   font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Söhne';
+  src: url('/fonts/TestSohne-Dreiviertelfett.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SöhneMono';
+  src: url('/fonts/TestSohneMono-Buch.otf') format('opentype');
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
@@ -38,10 +68,14 @@
   --text-tertiary: #8a8a8a;
   --border: #e6e0d8;
   --border-focus: #2d2d2d;
+  
+  /* Typography variables */
+  --font-primary: 'Söhne', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
+  --font-mono: 'SöhneMono', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
 }
 
 body {
-  font-family: 'Söhne', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, system-ui, sans-serif;
+  font-family: var(--font-primary);
   background: var(--bg);
   color: var(--text-primary);
   min-height: 100vh;
@@ -119,7 +153,7 @@ body::before {
 }
 
 .title {
-  font-family: 'Söhne', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, system-ui, sans-serif;
+  font-family: var(--font-primary);
   font-size: 1.75rem;
   font-weight: 600;
   margin: 0;
@@ -129,7 +163,7 @@ body::before {
 }
 
 .subtitle {
-  font-family: 'Söhne', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, system-ui, sans-serif;
+  font-family: var(--font-primary);
   font-size: 0.8rem;
   font-weight: 400;
   margin: 0;
@@ -165,7 +199,7 @@ body::before {
   width: 100%;
   padding: 0.75rem 0 0.75rem 2rem;
   font-size: 1rem;
-  font-family: 'Söhne', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, system-ui, sans-serif;
+  font-family: var(--font-primary);
   background: transparent;
   border: none;
   outline: none;
@@ -188,7 +222,7 @@ body::before {
   color: var(--text-tertiary);
   pointer-events: none;
   z-index: 1;
-  font-family: 'Söhne', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, system-ui, sans-serif;
+  font-family: var(--font-primary);
   font-size: 1rem;
 }
 
@@ -200,7 +234,7 @@ body::before {
   color: var(--text-secondary);
   pointer-events: none;
   z-index: 1;
-  font-family: 'Söhne', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, system-ui, sans-serif;
+  font-family: var(--font-primary);
   font-size: 1rem;
 }
 
@@ -223,7 +257,7 @@ body::before {
   justify-content: center;
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-weight: 400;
   background: var(--text-primary);
   border: 2px solid var(--text-primary);
@@ -301,7 +335,7 @@ body::before {
 }
 
 .book-title {
-  font-family: 'Söhne', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, system-ui, sans-serif;
+  font-family: var(--font-primary);
   font-size: 1rem;
   font-weight: 600;
   margin-bottom: 0.25rem;
@@ -333,7 +367,7 @@ body::before {
 }
 
 .book-author {
-  font-family: 'Söhne', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, system-ui, sans-serif;
+  font-family: var(--font-primary);
   font-size: 0.75rem;
   color: var(--text-secondary);
   margin-bottom: 0;
@@ -347,7 +381,7 @@ body::before {
 }
 
 .book-description {
-  font-family: 'Söhne', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, system-ui, sans-serif;
+  font-family: var(--font-primary);
   font-size: 0.85rem;
   line-height: 1.5;
   color: var(--text-secondary);
@@ -376,7 +410,7 @@ body::before {
 }
 
 .loading-ellipsis {
-  font-family: 'Söhne', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, system-ui, sans-serif;
+  font-family: var(--font-primary);
   color: var(--text-tertiary);
   display: inline-block;
 }
@@ -412,7 +446,7 @@ body::before {
 }
 
 .loading-text-enhanced {
-  font-family: 'Söhne', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, system-ui, sans-serif;
+  font-family: var(--font-primary);
   font-size: 1.1rem;
   font-weight: 400;
   color: var(--text-secondary);
@@ -421,7 +455,7 @@ body::before {
 }
 
 .loading-ellipsis-enhanced {
-  font-family: 'Söhne', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, system-ui, sans-serif;
+  font-family: var(--font-primary);
   font-size: 1.1rem;
   color: var(--text-secondary);
   display: inline-block;
@@ -449,7 +483,7 @@ body::before {
 
 .loading-text {
   color: var(--text-tertiary);
-  font-family: 'Söhne', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, system-ui, sans-serif;
+  font-family: var(--font-primary);
   font-size: 0.8rem;
   font-weight: 300;
   letter-spacing: 0.02em;
@@ -467,7 +501,7 @@ body::before {
 }
 
 .suggestions-header {
-  font-family: 'Söhne', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, system-ui, sans-serif;
+  font-family: var(--font-primary);
   font-size: 0.75rem;
   color: var(--text-tertiary);
   text-transform: uppercase;
@@ -486,7 +520,7 @@ body::before {
   width: 100%;
   padding: 0.75rem 1rem;
   text-align: left;
-  font-family: 'Söhne', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, system-ui, sans-serif;
+  font-family: var(--font-primary);
   font-size: 0.9rem;
   background: transparent;
   border: 1px solid var(--border);
